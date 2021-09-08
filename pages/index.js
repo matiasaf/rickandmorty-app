@@ -9,6 +9,7 @@ import {
   IconButton,
   useToast,
   Stack,
+  Spinner,
 } from "@chakra-ui/react";
 
 import Character from "../components/characters";
@@ -19,6 +20,7 @@ import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 export const RICK_AND_MORTY_GRAPHQL = "https://rickandmortyapi.com/graphql/";
 
 export default function Home(props) {
+  const [loading, setLoading] = useState(false);
   const initialState = props;
   const [characters, setCharacters] = useState(initialState.characters);
   const [search, setSearch] = useState("");
@@ -26,6 +28,7 @@ export default function Home(props) {
 
   async function handleSubmitForm(e) {
     e.preventDefault();
+    setLoading(true);
     const res = await fetch("/api/search-characters", {
       method: "POST",
       body: search,
@@ -43,6 +46,7 @@ export default function Home(props) {
     } else {
       setCharacters(characters);
     }
+    setLoading(false);
   }
   function handleResetButton() {
     setSearch("");
@@ -85,7 +89,12 @@ export default function Home(props) {
             />
           </Stack>
         </form>
-        <Character characters={characters} />
+
+        {loading ? (
+          <Spinner size="xl" />
+        ) : (
+          <Character characters={characters} />
+        )}
       </Box>
 
       <footer className={styles.footer}>
