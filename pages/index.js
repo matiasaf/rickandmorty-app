@@ -12,7 +12,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-import Character from "../components/characters";
+import Characters from "../components/characters";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
@@ -93,7 +93,7 @@ export default function Home(props) {
         {loading ? (
           <Spinner size="xl" />
         ) : (
-          <Character characters={characters} />
+          <Characters characters={characters} />
         )}
       </Box>
 
